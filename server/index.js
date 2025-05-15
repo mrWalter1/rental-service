@@ -2,16 +2,23 @@ import express from 'express';
 import dotenv from 'dotenv';
 import sequelize from './config/database.js';
 import cors from 'cors';
-import './models/user.js';
-import './models/offer.js';
-import './models/review.js';
+import router from './routes/index.js';
 
 dotenv.config();
 
 const PORT = process.env.PORT || 5000;
 const app = express();
 
-const start = async () => {
+app.use(cors());
+app.use(express.json());
+
+app.get('/', (req, res) => {
+  res.status(200).json({ message: 'Ура! Всё заработало!' });
+});
+
+app.use('/', router);
+
+async function start() {
   try {
     await sequelize.authenticate();
     await sequelize.sync();
@@ -24,5 +31,4 @@ const start = async () => {
 };
 start();
 
-app.use(cors());
-app.use(express.json());
+
