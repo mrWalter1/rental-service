@@ -1,4 +1,6 @@
 import { Offer } from '../models/offer.js';
+import { User  } from '../models/user.js';
+import ApiError from '../error/ApiError.js';
 import { adaptOfferToClient } from '../adapters/offerAdapter.js';
 
 export async function getAllOffers(req, res, next) {
@@ -61,5 +63,28 @@ export async function createOffer(req, res, next) {
     return res.status(201).json(offer);
   } catch (error) {
     next(ApiError.internal('Не удалось добавить предложение: ' + error.message));
+  }
+}
+
+export async function getFullOffer(req, res, next) {
+  try {
+    const id = req.params.id;
+    const offer = await Offer.findByPk(id, {
+      include: { model: User, as: 'author' }
+    });
+    if (!offer) {
+      return next(ApiError.badRequest('Offer not found'));
+    }
+    const adapted = adaptOfferToClient(offer);
+    // Добавим данные об авторе
+    adapted.author = {
+      id:       String(offer.author.id),
+      email:    offer.author.email,
+      username: offer.author.username,
+      avatar:   `${process.env.HOST}:${process.env.PORT}${offer.author.avatar}`
+    };
+    res.status(200).json(adapted);
+  } catch (error) {
+    next(ApiError.internal(error.message));
   }
 }
