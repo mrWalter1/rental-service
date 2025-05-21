@@ -1,12 +1,14 @@
 import { Offer } from '../models/offer.js';
+import { adaptOfferToClient } from '../adapters/offerAdapter.js';
 
 export async function getAllOffers(req, res, next) {
   try {
     const offers = await Offer.findAll();
-    res.status(200).json(offers);
+    const adapted = offers.map(adaptOfferToClient);
+
+    res.status(200).json(adapted);
   } catch (error) {
-    console.error('Не удалось получить список предложений:', error);
-    next(error);
+    next(ApiError.internal('Не удалось получить список предложений'));
   }
 }
 
