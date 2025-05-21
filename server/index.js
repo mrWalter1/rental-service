@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import sequelize from './config/database.js';
 import cors from 'cors';
 import router from './routes/index.js';
+import ErrorHandlingMiddleware from './middleware/ErrorHandlingMiddleware.js';
 
 dotenv.config();
 
@@ -17,6 +18,8 @@ app.get('/', (req, res) => {
 });
 
 app.use('/', router);
+
+app.use(ErrorHandlingMiddleware);
 
 async function start() {
   try {
