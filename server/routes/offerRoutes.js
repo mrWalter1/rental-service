@@ -5,6 +5,9 @@ import { getAllOffers, createOffer } from '../controllers/offerController.js';
 
 const router = new Router();
 router.get('/offers', getAllOffers);
+
+router.get('/offers/:id', getFullOffer);
+
 router.post(
   '/offers',
   upload.fields([
