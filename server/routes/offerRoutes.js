@@ -1,7 +1,7 @@
 // routes/offerRoutes.js
 import { Router } from 'express';
 import upload     from '../middleware/upload.js';
-import { getAllOffers, createOffer } from '../controllers/offerController.js';
+import { getAllOffers, createOffer, getFullOffer } from '../controllers/offerController.js';
 
 const router = new Router();
 router.get('/offers', getAllOffers);
