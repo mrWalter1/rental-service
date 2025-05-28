@@ -1,4 +1,5 @@
 // controllers/userController.js
+import jwt from 'jsonwebtoken';
 import bcrypt      from 'bcrypt';
 import ApiError    from '../error/ApiError.js';
 import { User }    from '../models/user.js';
@@ -39,3 +40,47 @@ export const registration = async (req, res, next) => {
     next(ApiError.internal('Ошибка регистрации'));
   }
 };
+
+export const login = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ where: { email } });
+    if (!user) return next(ApiError.badRequest('Пользователь не найден'));
+
+    const isValid = await bcrypt.compare(password, user.password);
+    if (!isValid) return next(ApiError.badRequest('Неверный пароль'));
+
+    const token = jwt.sign(
+      { id: user.id },
+      process.env.JWT_SECRET,
+      { expiresIn: '24h' }
+    );
+    return res.json({ token });
+  } catch (error) {
+    next(ApiError.internal('Ошибка авторизации'));
+  }
+};
+
+// После authenticateToken в req.user лежит User
+export const checkAuth = (req, res) => {
+  const user = req.user;
+  const token = jwt.sign(
+    { id: user.id },
+    process.env.JWT_SECRET,
+    { expiresIn: '24h' }
+  );
+  return res.json({
+    id:       user.id,
+    email:    user.email,
+    username: user.username,
+    avatar:   user.avatar,
+    isPro:    user.userType === 'pro',
+    token
+  });
+};
+
+export const logout = (req, res) => {
+  // Сервер ничего не хранит — клиенту достаточно удалить токен
+  return res.status(204).send();
+};
+
