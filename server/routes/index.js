@@ -6,6 +6,6 @@ import reviewRouter from './reviewRoutes.js';
 const router = new Router();
 router.use('/', offerRouter);
 router.use('/', userRoutes);
-router.use('/comments', reviewRouter);
+router.use('/reviews', reviewRouter);
 
 export default router;

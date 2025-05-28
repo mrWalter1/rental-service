@@ -1,6 +1,8 @@
 // server/controllers/reviewController.js
 import ApiError from '../error/ApiError.js';
 import { Review }  from '../models/review.js';
+import { User }     from '../models/user.js';
+import { adaptReviewToClient } from '../adapters/reviewAdapter.js';
 
 // 1) Добавление нового отзыва
 export const addReview = async (req, res, next) => {
@@ -28,14 +30,11 @@ export const addReview = async (req, res, next) => {
 };
 
 // 2) Получение списка отзывов по офферу
-import { User } from '../models/user.js';
-import { adaptReviewToClient } from '../adapters/reviewAdapter.js';
-
 export const getReviewsByOfferId = async (req, res, next) => {
   try {
     const offerId = req.params.offerId;
     const reviews = await Review.findAll({
-      where: { offerId },
+      where: { OfferId: offerId },
       include: [{ model: User, as: 'author' }],
       order: [['publishDate', 'DESC']]
     });
