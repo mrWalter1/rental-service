@@ -14,6 +14,6 @@ Review.init({
   tableName: 'reviews'
 });
 
-Review.belongsTo(User,  { as: 'author', foreignKey: { allowNull:false } });
+Review.belongsTo(User, { as: 'author', foreignKey: 'authorId' });
 Review.belongsTo(Offer, { foreignKey: { allowNull:false } });
 export { Review };
