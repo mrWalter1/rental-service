@@ -19,7 +19,7 @@ export const addReview = async (req, res, next) => {
       text:       comment,
       rating,
       authorId:   userId,
-      offerId    // поле должно называться именно offerId
+      OfferId:    offerId    // поле должно называться именно offerId
     });
 
     return res.status(201).json(review);
