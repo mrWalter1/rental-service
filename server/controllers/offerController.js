@@ -3,6 +3,31 @@ import { User  } from '../models/user.js';
 import ApiError from '../error/ApiError.js';
 import { adaptOfferToClient } from '../adapters/offerAdapter.js';
 
+export async function getFavoriteOffers(req, res, next) {
+  try {
+    const favs = await Offer.findAll({ where: { isFavorite: true } });
+    return res.status(200).json(favs);
+  } catch (error) {
+    return next(ApiError.internal('Не удалось получить избранные'));
+  }
+}
+
+export async function toggleFavorite(req, res, next) {
+  try {
+    const { offerId, status } = req.params;
+    const offer = await Offer.findByPk(offerId);
+    if (!offer) {
+      return next(ApiError.badRequest('Предложение не найдено'));
+    }
+    offer.isFavorite = status === '1';
+    await offer.save();
+    return res.json(offer);
+  } catch (error) {
+    return next(ApiError.internal('Ошибка при обновлении избранного'));
+  }
+}
+
+
 export async function getAllOffers(req, res, next) {
   try {
     const offers = await Offer.findAll();
