@@ -8,7 +8,10 @@
     "jsx": "react-jsx",
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    // Ниже — важно:
+    "types": ["react", "react-dom"],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"]
   },
   "include": ["src"]
 }
