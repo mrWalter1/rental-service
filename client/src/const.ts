@@ -8,8 +8,14 @@ export const AppRoute = {
   
 } as const;
 
-// src/const.ts
 
 export const Setting = {
   rentalOffersCount: 312,
+} as const;
+
+
+export const AuthorizationStatus = {
+  Auth:   'AUTH',
+  NoAuth: 'NO_AUTH',
+  Unknown:'UNKNOWN',
 } as const;

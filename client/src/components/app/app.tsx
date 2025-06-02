@@ -8,6 +8,8 @@ import { OfferPage  }   from '../../pages/offer-page/offer-page';
 import { EmptyPage }    from '../../pages/empty-page/empty-page';
 import { AppRoute }  from '../../const';
 import React, { JSX } from 'react';
+import { PrivateRoute } from '../private-route/private-route';
+import { AuthorizationStatus } from '../../const';
 
 type AppMainPageProps = {
   rentalOffersCount: number;
@@ -22,9 +24,18 @@ function App({ rentalOffersCount }: AppMainPageProps): JSX.Element {
           element={<MainPage rentalOffersCount={rentalOffersCount} />}
         />
         <Route path={AppRoute.Login} element={<LoginPage />} />
-        <Route path={AppRoute.Favorites} element={<FavoritesPage />} />
+
+        <Route
+          path={AppRoute.Favorites}
+          element={
+            <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+              {/* TODO: вместо NO_AUTH передавать реальный статус из состояния */}
+              <FavoritesPage />
+            </PrivateRoute>
+          }
+        />
+
         <Route path={AppRoute.Offer} element={<OfferPage />} />
-        {/* Все остальные пути — 404 */}
         <Route path="*" element={<EmptyPage />} />
       </Routes>
     </BrowserRouter>
