@@ -42,57 +42,57 @@ export const offers: FullOffer[] = [
     previewImage: 'photo63.jpg'
   },
 
-      {
-        'id': 'bag36a0e-3f92-446d-9a68-cb64b5d38e2b',
-        'title': 'stone apps',
-        'description': 'A new spacious appartment.',
-        'type': 'apartment',
-        'price': 320,
-        'images': [
-          'photo51.jpg',
-          'photo52.jpg',
-          'photo63.jpg',
-        ],
-        'city': {
-          'name': 'Cologne',
-          'location': {
-            'latitude': 44.85661,
-            'longitude': 2.351499,
-            'zoom': 13
-          }
-        },
-        'location': {
-          'latitude': 44.85661,
-          'longitude': 2.351499,
-          'zoom': 16
-        },
-        'goods': [
-          'Heating',
-          'Wi-Fi',
-          'Fridge',
-          'Laptop friendly workspace',
-          'Baby seat',
-          'Air conditioning',
-          'Washer',
-          'Towels',
-          'Dishwasher',
-          'Kitchen',
-          'Washing machine',
-          'Breakfast',
-          'Coffee machine'
-        ],
-        'host': {
-          'isPro': true,
-          'name': 'kek',
-          'avatarUrl': 'avatar-angelina.jpg'
-        },
-        'isPremium': true,
-        'isFavorite': true,
-        'rating': 4.8,
-        'bedrooms': 4,
-        'maxAdults': 6,
-        publishDate: '',
-        previewImage: 'room.jpg'
-      },
+  {
+    'id': 'bag36a0e-3f92-446d-9a68-cb64b5d38e2b',
+    'title': 'stone apps',
+    'description': 'A new spacious appartment.',
+    'type': 'apartment',
+    'price': 320,
+    'images': [
+      'photo51.jpg',
+      'photo52.jpg',
+      'photo63.jpg',
+    ],
+    'city': {
+      'name': 'Cologne',
+      'location': {
+        'latitude': 44.85661,
+        'longitude': 2.351499,
+        'zoom': 13
+      }
+    },
+    'location': {
+      'latitude': 44.85661,
+      'longitude': 2.351499,
+      'zoom': 16
+    },
+    'goods': [
+      'Heating',
+      'Wi-Fi',
+      'Fridge',
+      'Laptop friendly workspace',
+      'Baby seat',
+      'Air conditioning',
+      'Washer',
+      'Towels',
+      'Dishwasher',
+      'Kitchen',
+      'Washing machine',
+      'Breakfast',
+      'Coffee machine'
+    ],
+    'host': {
+      'isPro': true,
+      'name': 'kek',
+      'avatarUrl': 'avatar-angelina.jpg'
+    },
+    'isPremium': true,
+    'isFavorite': true,
+    'rating': 4.8,
+    'bedrooms': 4,
+    'maxAdults': 6,
+    publishDate: '',
+    previewImage: 'room.jpg'
+  },
 
 ];
