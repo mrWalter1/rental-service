@@ -1,7 +1,7 @@
 // src/components/favorites-card/favorites-card.tsx
 import React, { JSX } from 'react';
 export type FavoritesCardProps = {
-  id:           string; // можно оставить, но употребить, например, в Link
+  id:           string;
   title:        string;
   type:         string;
   price:        number;

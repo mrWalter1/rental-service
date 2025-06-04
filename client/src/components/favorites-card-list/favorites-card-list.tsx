@@ -3,7 +3,6 @@ import React, { JSX } from 'react';
 import { FavoritesCard } from '../favorites-card/favorites-card';
 import { OffersList } from '../../types/offer';
 
-// Тип элемента списка избранных: переиспользуем OffersList (previewImage/price/type и т.д.)
 export type FavoritesOffersList = OffersList;
 
 export type FavoritesCardListProps = {
