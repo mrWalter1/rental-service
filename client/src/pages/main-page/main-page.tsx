@@ -1,15 +1,16 @@
-import { CitiesCard } from "../../components/cities-card/cities-card";
 import React, { JSX } from 'react';
 import { Logo } from '../../components/logo/logo';
-
+import { FullOffer } from '../../types/offer';
+import CitiesCardList from '../../components/cities-card-list/cities-card-list';
 
 type MainPageProps = {
   rentalOffersCount: number;
+  offers:            FullOffer[];
 };
 
-function MainPage({ rentalOffersCount }: MainPageProps): JSX.Element {
+function MainPage({ rentalOffersCount, offers }: MainPageProps): JSX.Element {
   return (
-        <div className="page page--gray page--main">
+    <div className="page page--gray page--main">
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
@@ -20,8 +21,7 @@ function MainPage({ rentalOffersCount }: MainPageProps): JSX.Element {
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
                   <a className="header__nav-link header__nav-link--profile" href="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
+                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
                     <span className="header__user-name user__name">Myemail@gmail.com</span>
                     <span className="header__favorite-count">3</span>
                   </a>
@@ -75,11 +75,14 @@ function MainPage({ rentalOffersCount }: MainPageProps): JSX.Element {
             </ul>
           </section>
         </div>
+
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{rentalOffersCount} places to stay in Amsterdam</b>
+              <b className="places__found">
+                {rentalOffersCount} places to stay in Amsterdam
+              </b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -89,19 +92,21 @@ function MainPage({ rentalOffersCount }: MainPageProps): JSX.Element {
                   </svg>
                 </span>
                 <ul className="places__options places__options--custom places__options--opened">
-                  <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-                  <li className="places__option" tabIndex={0}>Price: low to high</li>
-                  <li className="places__option" tabIndex={0}>Price: high to low</li>
-                  <li className="places__option" tabIndex={0}>Top rated first</li>
+                  <li className="places__option places__option--active" tabIndex={0}>
+                    Popular
+                  </li>
+                  <li className="places__option" tabIndex={0}>
+                    Price: low to high
+                  </li>
+                  <li className="places__option" tabIndex={0}>
+                    Price: high to low
+                  </li>
+                  <li className="places__option" tabIndex={0}>
+                    Top rated first
+                  </li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                <CitiesCard />
-                <CitiesCard />
-                <CitiesCard />
-                <CitiesCard />
-                <CitiesCard />
-              </div>
+              <CitiesCardList offersList={offers} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>
@@ -110,8 +115,8 @@ function MainPage({ rentalOffersCount }: MainPageProps): JSX.Element {
         </div>
       </main>
     </div>
-    );
-    }
+  );
+}
 
 export { MainPage };
 
