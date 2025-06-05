@@ -1,7 +1,10 @@
+// src/pages/main-page/main-page.tsx
 import React, { JSX } from 'react';
 import { Logo } from '../../components/logo/logo';
-import { FullOffer } from '../../types/offer';
 import CitiesCardList from '../../components/cities-card-list/cities-card-list';
+import Map, { Point } from '../../components/map/map'; // ← подключили Map
+
+import { FullOffer } from '../../types/offer';
 
 type MainPageProps = {
   rentalOffersCount: number;
@@ -9,6 +12,23 @@ type MainPageProps = {
 };
 
 function MainPage({ rentalOffersCount, offers }: MainPageProps): JSX.Element {
+  // Собираем массив точек (Point[]) из offers
+  const points: Point[] = offers.map((offer) => ({
+    id: offer.id,
+    location: {
+      latitude:  offer.location.latitude,
+      longitude: offer.location.longitude,
+      zoom:      offer.location.zoom,
+    },
+  }));
+
+  // Укажем «центр» карты (координаты Амстердама, например)
+  const centerCoords = {
+    latitude:  52.379189,
+    longitude: 4.899431,
+    zoom:      12,
+  };
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -108,8 +128,12 @@ function MainPage({ rentalOffersCount, offers }: MainPageProps): JSX.Element {
               </form>
               <CitiesCardList offersList={offers} />
             </section>
+
+            {/* Здесь отображаем карту в правой секции */}
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+                <Map points={points} center={centerCoords} />
+              </section>
             </div>
           </div>
         </div>
@@ -119,5 +143,3 @@ function MainPage({ rentalOffersCount, offers }: MainPageProps): JSX.Element {
 }
 
 export { MainPage };
-
-    
