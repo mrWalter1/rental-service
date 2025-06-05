@@ -4,25 +4,60 @@ import React, { JSX } from 'react';
 import { useParams } from 'react-router-dom';
 import { FullOffer } from '../../types/offer';
 import { Logo } from '../../components/logo/logo';
-import { NearPlacesCard } from '../../components/near-places-card/near-places-card';
+import {NearPlacesCard} from '../../components/near-places-card/near-places-card';
 import { EmptyPage } from '../empty-page/empty-page';
-import { CommentForm } from '../../components/comment-form/comment-form';
 
+// Динамическая форма для добавления отзыва
+import CommentForm from '../../components/comment-form/comment-form';
+
+// import { reviews as allReviews } from '../../mocks/reviews';
+// import ReviewList from '../../components/review-list/review-list';
+
+// Компонент «Карта» и соответствующие типы
+import Map, { Point } from '../../components/map/map';
 
 type OfferPageProps = {
   offers: FullOffer[];
 };
 
 function OfferPage({ offers }: OfferPageProps): JSX.Element {
+  // Берём :id из URL
   const { id } = useParams<'id'>();
   if (!id) {
     return <EmptyPage />;
   }
 
+  // Находим текущее объявление
   const offer = offers.find((o) => o.id === id);
   if (!offer) {
     return <EmptyPage />;
   }
+
+  // Обработчик отправки нового отзыва (в данном примере просто логируем в консоль)
+  const handleAddReview = (rating: number, comment: string) => {
+    console.log('Новый отзыв для оффера', offer.id, { rating, comment });
+    // Здесь можно вызывать API или обновлять состояние
+  };
+
+  // Собираем «ближайшие» 3 предложения (любой, кроме текущего)
+  const nearbyOffers = offers.filter((o) => o.id !== offer.id).slice(0, 3);
+
+  // Преобразуем в массив точек для карты
+  const nearbyPoints: Point[] = nearbyOffers.map((o) => ({
+    id: o.id,
+    location: {
+      latitude:  o.location.latitude,
+      longitude: o.location.longitude,
+      zoom:      o.location.zoom,
+    },
+  }));
+
+  // Центр карты — координаты текущего объекта
+  const centerCoords = {
+    latitude:  offer.location.latitude,
+    longitude: offer.location.longitude,
+    zoom:      16,
+  };
 
   return (
     <div className="page">
@@ -54,6 +89,7 @@ function OfferPage({ offers }: OfferPageProps): JSX.Element {
 
       <main className="page__main page__main--offer">
         <section className="offer">
+          {/* Галерея фотографий */}
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
               {offer.images.map((img) => (
@@ -70,12 +106,14 @@ function OfferPage({ offers }: OfferPageProps): JSX.Element {
 
           <div className="offer__container container">
             <div className="offer__wrapper">
+              {/* Метка «Premium» */}
               {offer.isPremium && (
                 <div className="offer__mark">
                   <span>Premium</span>
                 </div>
               )}
 
+              {/* Название и кнопка «закладки» */}
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">{offer.title}</h1>
                 <button className="offer__bookmark-button button" type="button">
@@ -88,6 +126,7 @@ function OfferPage({ offers }: OfferPageProps): JSX.Element {
                 </button>
               </div>
 
+              {/* Рейтинг */}
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
                   <span style={{ width: `${offer.rating * 20}%` }}></span>
@@ -98,6 +137,7 @@ function OfferPage({ offers }: OfferPageProps): JSX.Element {
                 </span>
               </div>
 
+              {/* Характеристики */}
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
                   {offer.type}
@@ -110,11 +150,13 @@ function OfferPage({ offers }: OfferPageProps): JSX.Element {
                 </li>
               </ul>
 
+              {/* Цена */}
               <div className="offer__price">
                 <b className="offer__price-value">&euro;{offer.price}</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
 
+              {/* Удобства */}
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
                 <ul className="offer__inside-list">
@@ -126,6 +168,7 @@ function OfferPage({ offers }: OfferPageProps): JSX.Element {
                 </ul>
               </div>
 
+              {/* Информация о хосте */}
               <div className="offer__host">
                 <h2 className="offer__host-title">Meet the host</h2>
                 <div className="offer__host-user user">
@@ -148,10 +191,13 @@ function OfferPage({ offers }: OfferPageProps): JSX.Element {
                 </div>
               </div>
 
+              {/* Блок «Отзывы» */}
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">
                   Reviews &middot; <span className="reviews__amount">1</span>
                 </h2>
+
+                {/* Статическая разметка одного отзыва (можно заменить на ReviewList) */}
                 <ul className="reviews__list">
                   <li className="reviews__item">
                     <div className="reviews__user user">
@@ -182,22 +228,27 @@ function OfferPage({ offers }: OfferPageProps): JSX.Element {
                     </div>
                   </li>
                 </ul>
-                <CommentForm />
 
+                {/* Динамическая форма отзыва */}
+                <CommentForm onSubmit={handleAddReview} />
               </section>
             </div>
           </div>
 
-          <section className="offer__map map"></section>
+          {/* Контейнер для карты */}
+          <section className="offer__map map" style={{ height: '300px' }}>
+            <Map points={nearbyPoints} center={centerCoords} />
+          </section>
         </section>
 
+        {/* Блок «Other places in the neighbourhood» */}
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <NearPlacesCard />
-              <NearPlacesCard />
-              <NearPlacesCard />
+              {nearbyOffers.map((o) => (
+                <NearPlacesCard key={o.id} offer={o} />
+              ))}
             </div>
           </section>
         </div>
