@@ -6,7 +6,6 @@ type ReviewItemProps = {
 };
 
 function ReviewItem({ review }: ReviewItemProps): JSX.Element {
-  // Преобразуем ISO-дату в формат «Month Year» (например, «June 2023»)
   const dateObj = new Date(review.date);
   const formattedDate = dateObj.toLocaleString('en-US', {
     month: 'long',

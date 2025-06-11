@@ -23,7 +23,6 @@ function CommentForm({ onSubmit }: CommentFormProps): JSX.Element {
     evt.preventDefault();
     if (isSubmitEnabled) {
       onSubmit(rating, commentText);
-      // После отправки можно очистить форму:
       setRating(0);
       setCommentText('');
     }

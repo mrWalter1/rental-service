@@ -2,7 +2,7 @@
 import React, { JSX } from 'react';
 import { Logo } from '../../components/logo/logo';
 import CitiesCardList from '../../components/cities-card-list/cities-card-list';
-import Map, { Point } from '../../components/map/map'; // ← подключили Map
+import Map, { Point } from '../../components/map/map'; 
 
 import { FullOffer } from '../../types/offer';
 
@@ -22,7 +22,7 @@ function MainPage({ rentalOffersCount, offers }: MainPageProps): JSX.Element {
     },
   }));
 
-  // Укажем «центр» карты (координаты Амстердама, например)
+  // «центр» карты 
   const centerCoords = {
     latitude:  52.379189,
     longitude: 4.899431,

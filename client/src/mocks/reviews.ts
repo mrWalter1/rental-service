@@ -8,7 +8,7 @@ const reviews: Review[] = [
     rating: 4,
     user: {
       name: 'Isaac',
-      avatarUrl: 'avatar-angelina.jpg',  // предполагается, что файл лежит в public/img/
+      avatarUrl: 'avatar-angelina.jpg', 
       isPro: true,
     },
   },
@@ -23,7 +23,7 @@ const reviews: Review[] = [
       isPro: false,
     },
   },
-  // … можно добавить ещё несколько объектов Review
+
 ];
 
 export { reviews };

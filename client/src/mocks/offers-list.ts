@@ -1,6 +1,6 @@
 // src/mocks/offers-list.ts
 
-import { OffersList } from '../types/offer'; // <-- из types
+import { OffersList } from '../types/offer'; 
 
 export const offersList: OffersList[] = [
   {
@@ -50,6 +50,6 @@ export const offersList: OffersList[] = [
     isPremium:  true,
     rating:     4.9,
   },
-  // … ещё 3-4 объекта OfferList
+
 ];
 

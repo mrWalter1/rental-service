@@ -33,13 +33,13 @@ function OfferPage({ offers }: OfferPageProps): JSX.Element {
     return <EmptyPage />;
   }
 
-  // Обработчик отправки нового отзыва (в данном примере просто логируем в консоль)
+  // Обработчик отправки нового отзыва 
   const handleAddReview = (rating: number, comment: string) => {
     console.log('Новый отзыв для оффера', offer.id, { rating, comment });
-    // Здесь можно вызывать API или обновлять состояние
+
   };
 
-  // Собираем «ближайшие» 3 предложения (любой, кроме текущего)
+  // Собираем «ближайшие» 3 предложения 
   const nearbyOffers = offers.filter((o) => o.id !== offer.id).slice(0, 3);
 
   // Преобразуем в массив точек для карты
@@ -197,7 +197,7 @@ function OfferPage({ offers }: OfferPageProps): JSX.Element {
                   Reviews &middot; <span className="reviews__amount">1</span>
                 </h2>
 
-                {/* Статическая разметка одного отзыва (можно заменить на ReviewList) */}
+                {/* Статическая разметка одного отзыва  */}
                 <ul className="reviews__list">
                   <li className="reviews__item">
                     <div className="reviews__user user">

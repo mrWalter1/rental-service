@@ -55,7 +55,7 @@ function Map({ points, center }: MapProps): JSX.Element {
 
       mapInstanceRef.current = map;
     } else if (mapInstanceRef.current) {
-      // Если карта уже создана, просто меняем центр (и можно обновлять маркеры при необходимости)
+      // Если карта уже создана, просто меняем центр 
       mapInstanceRef.current.setView(
         [center.latitude, center.longitude],
         center.zoom
