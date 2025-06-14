@@ -95,4 +95,58 @@ export const offers: FullOffer[] = [
     previewImage: 'room.jpg'
   },
 
+    {
+    'id': 'aaa12b3c-4d5e-6f7g-8h9i-0j1k2l3m4n5o',
+    'title': 'Cozy studio near canal',
+    'description': 'A new spacious appartment.',
+    'type': 'apartment',
+    'price': 320,
+    'images': [
+      'photo51.jpg',
+      'photo52.jpg',
+      'photo63.jpg',
+    ],
+    'city': {
+      'name': 'Cologne',
+      'location': {
+        'latitude': 50.937531,
+        'longitude': 6.962000,
+        'zoom': 13
+      }
+    },
+    'location': {
+      'latitude': 50.937531,
+      'longitude': 6.962000,
+      'zoom': 13
+    },
+    'goods': [
+      'Heating',
+      'Wi-Fi',
+      'Fridge',
+      'Laptop friendly workspace',
+      'Baby seat',
+      'Air conditioning',
+      'Washer',
+      'Towels',
+      'Dishwasher',
+      'Kitchen',
+      'Washing machine',
+      'Breakfast',
+      'Coffee machine'
+    ],
+    'host': {
+      'isPro': true,
+      'name': 'kek',
+      'avatarUrl': 'avatar-angelina.jpg'
+    },
+    'isPremium': true,
+    'isFavorite': true,
+    'rating': 4.8,
+    'bedrooms': 4,
+    'maxAdults': 6,
+    publishDate: '',
+    previewImage: 'room.jpg'
+  },
+
+
 ];
