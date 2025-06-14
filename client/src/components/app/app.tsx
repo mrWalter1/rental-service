@@ -1,53 +1,49 @@
 // src/components/app/app.tsx
 
-import React, { JSX } from 'react';
+import React, { JSX, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import {MainPage} from '../../pages/main-page/main-page';
-import LoginPage from '../../pages/login-page/login-page';
-import FavoritesPage from '../../pages/favorites-page/favorites-page';
-import OfferPage from '../../pages/offer-page/offer-page';
-import {EmptyPage} from '../../pages/empty-page/empty-page';
+import { MainPage }    from '../../pages/main-page/main-page';
+import LoginPage       from '../../pages/login-page/login-page';
+import FavoritesPage   from '../../pages/favorites-page/favorites-page';
+import OfferPage       from '../../pages/offer-page/offer-page';
+import { EmptyPage }   from '../../pages/empty-page/empty-page';
 
-import { PrivateRoute } from '../private-route/private-route';
+import { PrivateRoute }        from '../private-route/private-route';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import { FullOffer } from '../../types/offer';
+import { useAppDispatch } from '../../hooks';
+import { setOffersList } from '../../store/actions';
+import { offers as allOffers } from '../../mocks/offers';
+function App(): JSX.Element {
+    const dispatch = useAppDispatch();
+      useEffect(() => {
+    dispatch(setOffersList(allOffers));
+  }, [dispatch]);
 
-type AppMainPageProps = {
-  rentalOffersCount: number;
-  offers:            FullOffer[];
-};
-
-function App({ rentalOffersCount, offers }: AppMainPageProps): JSX.Element {
+    
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path={AppRoute.Main}
-          element={
-            <MainPage
-              rentalOffersCount={rentalOffersCount}
-              offers={offers}
-            />
-          }
-        />
+        {/* Главная страница */}
+        <Route path={AppRoute.Main} element={<MainPage />} />
 
-        <Route path={AppRoute.Login} element={<LoginPage />} />      {/* <-- default import */}
+        {/* Логин */}
+        <Route path={AppRoute.Login} element={<LoginPage />} />
 
+        {/* Избранное (защищённый маршрут) */}
         <Route
           path={AppRoute.Favorites}
           element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-              <FavoritesPage offers={offers} />
+            <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+              <FavoritesPage />
             </PrivateRoute>
           }
         />
 
-        <Route
-          path={AppRoute.Offer}
-          element={<OfferPage offers={offers} />}
-        />
+        {/* Описание конкретного оффера */}
+        <Route path={AppRoute.Offer} element={<OfferPage />} />
 
+        {/* 404 */}
         <Route path="*" element={<EmptyPage />} />
       </Routes>
     </BrowserRouter>
@@ -55,4 +51,3 @@ function App({ rentalOffersCount, offers }: AppMainPageProps): JSX.Element {
 }
 
 export default App;
-
