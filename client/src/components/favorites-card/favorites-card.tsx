@@ -1,5 +1,7 @@
 // src/components/favorites-card/favorites-card.tsx
 import React, { JSX } from 'react';
+import { Link } from 'react-router-dom';
+
 export type FavoritesCardProps = {
   id:           string;
   title:        string;
@@ -22,12 +24,12 @@ function FavoritesCard({
   return (
     <article className="favorites__card place-card">
       {isPremium && (
-        <div className="favorites__card-mark">
+        <div className="place-card__mark">
           <span>Premium</span>
         </div>
       )}
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <a href={`/offer/${id}`}>{/* Используем id для ссылки */}
+        <Link to={`/offer/${id}`}>
           <img
             className="place-card__image"
             src={`/img/${previewImage}`}
@@ -35,7 +37,7 @@ function FavoritesCard({
             height="110"
             alt="Place image"
           />
-        </a>
+        </Link>
       </div>
       <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
@@ -60,7 +62,7 @@ function FavoritesCard({
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href={`/offer/${id}`}>{title}</a>
+          <Link to={`/offer/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
@@ -69,3 +71,4 @@ function FavoritesCard({
 }
 
 export { FavoritesCard };
+

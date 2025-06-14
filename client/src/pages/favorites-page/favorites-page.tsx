@@ -1,37 +1,27 @@
 // src/pages/favorites-page/favorites-page.tsx
-
 import React, { JSX } from 'react';
-import { FullOffer, OffersList } from '../../types/offer';
+import { useAppSelector } from '../../hooks';
 import { Logo } from '../../components/logo/logo';
 import FavoritesCardList from '../../components/favorites-card-list/favorites-card-list';
 import { EmptyPage } from '../empty-page/empty-page';
 
-type FavoritesPageProps = {
-  offers: FullOffer[];
-};
-
-function FavoritesPage({ offers }: FavoritesPageProps): JSX.Element {
-  // Отбираем избранные
-  const favoriteOffers: OffersList[] = offers
-    .filter((o) => o.isFavorite)
-    .map((o) => ({
-      id:           o.id,
-      title:        o.title,
-      type:         o.type,
-      price:        o.price,
-      previewImage: o.images[0],
-      isPremium:    o.isPremium,
-      rating:       o.rating,
-      // добавляем недостающие поля:
-      city:       o.city,
-      location:   o.location,
-      isFavorite: o.isFavorite
-    }));
-
+function FavoritesPage(): JSX.Element {
+  const offers = useAppSelector((state) => state.offers);
+  const favoriteOffers = offers.filter((o) => o.isFavorite);
 
   if (favoriteOffers.length === 0) {
     return <EmptyPage />;
   }
+
+  // Группируем избранные по городу
+  const offersByCity = favoriteOffers.reduce<Record<string, typeof favoriteOffers>>((acc, offer) => {
+    const cityName = offer.city.name;
+    if (!acc[cityName]) {
+      acc[cityName] = [];
+    }
+    acc[cityName].push(offer);
+    return acc;
+  }, {});
 
   return (
     <div className="page">
@@ -43,18 +33,7 @@ function FavoritesPage({ offers }: FavoritesPageProps): JSX.Element {
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__user-name user__name">Myemail@gmail.com</span>
-                    <span className="header__favorite-count">3</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
+                {/* Ваша шапочная навигация */}
               </ul>
             </nav>
           </div>
@@ -66,16 +45,18 @@ function FavoritesPage({ offers }: FavoritesPageProps): JSX.Element {
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
-              <li className="favorites__locations-items" key="all">
-                <div className="favorites__locations locations locations--current">
-                  <div className="locations__item">
-                    <a className="locations__item-link" href="#">
-                      <span>Favorites</span>
-                    </a>
+              {Object.entries(offersByCity).map(([cityName, cityOffers]) => (
+                <li className="favorites__locations-items" key={cityName}>
+                  <div className="favorites__locations locations locations--current">
+                    <div className="locations__item">
+                      <a className="locations__item-link" href="#">
+                        <span>{cityName}</span>
+                      </a>
+                    </div>
                   </div>
-                </div>
-                <FavoritesCardList offersList={favoriteOffers} />
-              </li>
+                  <FavoritesCardList offersList={cityOffers} />
+                </li>
+              ))}
             </ul>
           </section>
         </div>

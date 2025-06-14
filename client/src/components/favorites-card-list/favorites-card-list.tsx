@@ -3,25 +3,23 @@ import React, { JSX } from 'react';
 import { FavoritesCard } from '../favorites-card/favorites-card';
 import { OffersList } from '../../types/offer';
 
-export type FavoritesOffersList = OffersList;
-
 export type FavoritesCardListProps = {
-  offersList: FavoritesOffersList[];
+  offersList: OffersList[];
 };
 
 function FavoritesCardList({ offersList }: FavoritesCardListProps): JSX.Element {
   return (
     <div className="favorites__places">
-      {offersList.map((item) => (
+      {offersList.map((offer) => (
         <FavoritesCard
-          key={item.id}
-          id={item.id}
-          title={item.title}
-          type={item.type}
-          price={item.price}
-          previewImage={item.previewImage}
-          isPremium={item.isPremium}
-          rating={item.rating}
+          key={offer.id}
+          id={offer.id}
+          title={offer.title}
+          type={offer.type}
+          price={offer.price}
+          previewImage={offer.previewImage}
+          isPremium={offer.isPremium}
+          rating={offer.rating}
         />
       ))}
     </div>
@@ -29,3 +27,4 @@ function FavoritesCardList({ offersList }: FavoritesCardListProps): JSX.Element 
 }
 
 export default FavoritesCardList;
+
